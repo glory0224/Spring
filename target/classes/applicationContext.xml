@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- <bean id="tv" class="glory.spring.polymorphism.SamsungTV" init-method="start" 
+		destroy-method="stop"/> -->
+		
+	<!-- <bean id="tv" class="glory.spring.polymorphism.SamsungTV" scope="prototype"/> -->
+	
+	<!-- <bean id="tv" class="glory.spring.polymorphism.SamsungTV"> <constructor-arg 
+		ref="apple"></constructor-arg> <constructor-arg value="2500000"></constructor-arg> 
+		</bean> -->
+
+	<!-- setter injection -->
+	
+	<!-- Setter 메서드는 스프링 컨테이너가 자동으로 호출하며 호출하는 시점은 <bean> 객체가 생성된 직후이다. 따라서 setter 
+		인젝션이 동작하려면 setter 메서드뿐만 아니라 default 생성자도 반드시 필요하다 -->
+		
+	<!-- <bean id="tv" class="glory.spring.polymorphism.SamsungTV"> <property 
+		name="speaker" ref="apple"></property> <property name="price" value="3000000"></property> 
+		</bean> <bean id="sony" class="glory.spring.polymorphism.SonySpeaker"></bean> 
+		<bean id="apple" class="glory.spring.polymorphism.AppleSpeaker"></bean> -->
+
+	<!-- collection bean -->
+
+	<!-- list 타입 -->
+	<!-- <bean id="collectionBean" class="glory.spring.collection.CollectionBean">
+	 
+		<property name="addressList"> 
+		<list> 
+		<value>인천광역시 연수구 송도동</value> 
+		<value>인천광역시 연수구 동춘동</value> 
+		<value>인천광역시 연수구 연수동</value> 
+		</list> 
+		</property> 
+		</bean> -->
+
+	<!-- Map 타입 -->
+
+<!-- 	<bean id="collectionBean"
+		class="glory.spring.collection.CollectionBean">
+	
+		<property name="addressList2">
+			<map>
+				<entry>
+					<key>
+						<value>홍길동</value>
+					</key>
+					<value>율도국</value>
+				</entry>
+				<entry>
+					<key>
+						<value>손오공</value>
+					</key>
+					<value>화과산</value>
+				</entry>
+			</map>
+		</property>
+	</bean> -->
+	
+	<!-- Properties 타입 -->
+	
+<!-- 	<bean id="collectionBean" class="glory.spring.collection.CollectionBean">
+		<property name="addressList3">
+			<props>
+				<prop key="아이언맨">미국</prop>
+				<prop key="토르">아스가르드</prop>
+			</props>
+		</property>
+	</bean> -->
+	
+	<!--set 타입  -->
+<!-- 	<bean id="collectionBean" class="glory.spring.collection.CollectionBean">
+		<property name="addressList4">
+			<set value-type="java.lang.String">
+				<value>서울시 서초구 서초동</value>
+				<value>서울시 동대문구 장안동</value>
+				<value>서울시 동대문구 장안동</value>
+				<value>서울시 동대문구 장안동</value>
+			</set>
+		</property>
+	</bean>
+	 -->
+	 
+	 <!-- component 생성 -->
+	 <!-- <context:component-scan base-package="glory.spring.polymorphism"></context:component-scan> -->
+
+	<!-- <bean id="sonny" class="glory.spring.polymorphism.SonySpeaker"></bean> -->
+
+
+	<!-- beanfactory lifecycle 확인용 bean -->
+	<bean id="myLifeBean" class="glory.spring.lifecycle.MyLifeBeanImpl" init-method="init">
+		<property name="greeting"><value>Hello, </value></property>
+	</bean>
+	
+</beans>
