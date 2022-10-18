@@ -99,4 +99,11 @@
 	
 	<context:component-scan base-package="glory.spring.web"></context:component-scan>
 	
+	<!-- setter injection xml 주입 방식 -->
+	
+<!-- 	<bean id="userService" class="glory.spring.web.user.impl.UserServiceImpl">
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+	<bean id="userDAO" class="glory.spring.web.user.impl.UserDAO"></bean> -->
+	
 </beans>
