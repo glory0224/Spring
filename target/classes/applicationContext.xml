@@ -93,8 +93,10 @@
 
 
 	<!-- beanfactory lifecycle 확인용 bean -->
-	<bean id="myLifeBean" class="glory.spring.lifecycle.MyLifeBeanImpl" init-method="init">
+<!-- 	<bean id="myLifeBean" class="glory.spring.lifecycle.MyLifeBeanImpl" init-method="init">
 		<property name="greeting"><value>Hello, </value></property>
-	</bean>
+	</bean> -->
+	
+	<context:component-scan base-package="glory.spring.web"></context:component-scan>
 	
 </beans>
