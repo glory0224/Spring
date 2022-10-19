@@ -3,8 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- <bean id="tv" class="glory.spring.polymorphism.SamsungTV" init-method="start" 
 		destroy-method="stop"/> -->
@@ -97,7 +99,7 @@
 		<property name="greeting"><value>Hello, </value></property>
 	</bean> -->
 	
-	<context:component-scan base-package="glory.spring.web"></context:component-scan>
+	<!-- <context:component-scan base-package="glory.spring.web"></context:component-scan> -->
 	
 	<!-- setter injection xml 주입 방식 -->
 	
@@ -105,5 +107,41 @@
 		<property name="userDAO" ref="userDAO"></property>
 	</bean>
 	<bean id="userDAO" class="glory.spring.web.user.impl.UserDAO"></bean> -->
+	
+	<!-- aop를 xml로 적용 -->
+	
+<!-- 	<context:component-scan base-package="glory.spring.web"></context:component-scan>
+	<bean id="log" class="glory.spring.web.common.Log4jAdvice"></bean>
+	<bean id="log" class="glory.spring.web.common.LogAdvice"></bean>
+	before advice
+	<bean id="before" class="glory.spring.web.common.BeforeAdvice"></bean>
+	afterReturning advice
+	<bean id="afterReturning" class="glory.spring.web.common.AfterReturningAdvice"></bean>
+	afterThrowing advice
+	<bean id="afterThrowing" class="glory.spring.web.common.AfterThrowingAdvice"></bean>
+	after adivce
+	<bean id="after" class="glory.spring.web.common.AfterAdvice"></bean>
+	around advice
+	<bean id="around" class="glory.spring.web.common.AroundAdvice"></bean>
+	<aop:config>
+			<aop:pointcut expression="execution(* glory.spring.web..*Impl.*(..))" id="allPointcut"/>
+			<aop:pointcut expression="execution(* glory.spring.web..*Impl.get*(..))" id="getPointcut"/>
+			<aop:aspect ref="log">
+					<aop:after method="printLogging" pointcut-ref="getPointcut"/>
+			</aop:aspect>
+			<aop:aspect ref="afterThrowing">
+				<aop:after-throwing method="exceptionLog" pointcut-ref="allPointcut"/>
+			</aop:aspect>
+			<aop:aspect ref="around">
+				<aop:around method="aroundLog" pointcut-ref="getPointcut"/>
+			</aop:aspect>
+			
+	</aop:config> -->
+	
+	<!-- aop를 어노테이션 기반으로 설정 -->
+	
+	<context:component-scan base-package="glory.spring.web"></context:component-scan>
+	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
 </beans>

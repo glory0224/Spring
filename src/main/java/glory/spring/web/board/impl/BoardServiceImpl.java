@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import glory.spring.web.board.BoardService;
 import glory.spring.web.board.BoardVO;
+import glory.spring.web.common.Log4jAdvice;
+import glory.spring.web.common.LogAdvice;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -16,6 +18,10 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public void insertBoard(BoardVO vo) {
+//		if(vo.getSeq() == 0) {
+//			throw new IllegalArgumentException("0번 글은 등록할 수 없습니다.");
+//		}
+		
 		boardDAO.insertBoard(vo);
 	}
 
@@ -31,7 +37,6 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO getBoard(BoardVO vo) {
-		
 		return boardDAO.getBoard(vo);
 	}
 
