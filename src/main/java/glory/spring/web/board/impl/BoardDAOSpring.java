@@ -17,6 +17,9 @@ public class BoardDAOSpring {
 	private final String BOARD_INSERT = "insert into myboard(seq, title, writer, content)"
 			+ "values((select nvl(max(seq), 0) + 1 from myboard), ?,?,?)";
 	
+	// seq를 자동생성하지 않고 직접 넣는 방식을 사용해서 일부러 에러를 내고 transaction 동작 확인
+//	private final String BOARD_INSERT = 
+//						"insert into myboard(seq, title, writer, content) values(?, ?, ?, ?)";
 	private final String BOARD_UPDATE = "update myboard set title=?, content=?, where seq=?";
 	private final String BOARD_DELETE = "delete myboard where seq=?";
 	private final String BOARD_GET = "select * from myboard where seq=?";
@@ -25,6 +28,8 @@ public class BoardDAOSpring {
 	public void insertBoard(BoardVO vo) {
 		System.out.println("Spring JDBC로 insertBoard() 기능 처리");
 		jdbcTemplate.update(BOARD_INSERT, vo.getTitle(),vo.getWriter(), vo.getContent());
+		// transaction 확인을 위해 seq도 직접 등록
+		//jdbcTemplate.update(BOARD_INSERT, vo.getSeq(),vo.getTitle(),vo.getWriter(), vo.getContent());
 	}
 	
 	public void updateBoard(BoardVO vo) {
