@@ -5,23 +5,25 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
+
 import glory.spring.web.board.impl.BoardDAO;
-import glory.spring.web.controller.Controller;
 
 public class InsertBoardController implements Controller {
 	
 	@Override
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("글 등록 처리");
 		// 1.사용자 입력 정보 추출
 		// filter 기능으로 한번에 처리하려고 했는데 적용이 안되는 에러 발생 
 		// 우선 try catch로 잡았다. 
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			request.setCharacterEncoding("UTF-8");
+//		} catch (UnsupportedEncodingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		String title = request.getParameter("title");
 		String writer = request.getParameter("writer");
 		String content = request.getParameter("content");
@@ -36,7 +38,9 @@ public class InsertBoardController implements Controller {
 		boardDAO.insertBoard(vo);
 		
 		// 3. 화면 네비게이션 
-		return "getBoardList.do";
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:getBoardList.do");
+		return mav;
 	
 	}
 
