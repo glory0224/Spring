@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
-<bean  class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<!-- xml 설정 -->
+
+<!-- <bean  class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 	<property name="mappings">
 		<props>
 			<prop key="/login.do">login</prop>
@@ -23,9 +28,14 @@
 	<bean id="deleteBoard" class="glory.spring.web.board.DeleteBoardController"></bean>
 	<bean id="logout" class="glory.spring.web.user.LogoutController"></bean>
 	
-	<!-- ViewResolver 등록 -->
+	ViewResolver 등록
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/board/"></property>
 		<property name="suffix" value=".jsp"></property>
-	</bean>
+	</bean> -->
+
+<!-- 어노테이션 방식 -->
+	<context:component-scan base-package="glory.spring.web"></context:component-scan>
+	
+	
 </beans>

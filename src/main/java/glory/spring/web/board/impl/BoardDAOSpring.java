@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import glory.spring.web.board.BoardVO;
 
+/*
 @Repository
 public class BoardDAOSpring {
 	
@@ -54,4 +55,4 @@ public class BoardDAOSpring {
 		// RowMapper 객체가 매개변수로 필요함 
 		return jdbcTemplate.query(BOARD_LIST, new BoardRowMapper());
 	}
-}
+}*/

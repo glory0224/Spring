@@ -1,39 +1,58 @@
 package glory.spring.web.user;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import glory.spring.web.user.impl.UserDAO;
 
-public class LoginController implements Controller {
-
-	@Override
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+@Controller
+public class LoginController{
+	
+	
+	// GET/POST 방식에 따라 수행할 메서드를 다르게 처리 (속도 측면에서 이렇게 나누는 것이 좋다)
+	
+	//GET 방식
+	@RequestMapping(value="/login.do", method= RequestMethod.GET)
+	public String loginView(UserVO vo) {
+		System.out.println("로그인 화면 이동");
+		vo.setId("test");
+		vo.setPassword("test");
+		return "login.jsp";
+	}
+	
+	
+	//POST 방식
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	public String login(UserVO vo, UserDAO userDAO, HttpSession session) {
 		System.out.println("로그인 처리");
 		
 		// 1. 사용자 입력 정보 추출
-		String id = request.getParameter("id");
-		String password = request.getParameter("password");
+		// String id = request.getParameter("id");
+		// String password = request.getParameter("password");
 		
 		// 2. 데이터베이스 연동 처리
-		UserVO vo = new UserVO();
-		vo.setId(id);
-		vo.setPassword(password);
-		UserDAO userDAO = new UserDAO();
-		UserVO user = userDAO.getUser(vo);
+//		UserVO vo = new UserVO();
+//		vo.setId(id);
+//		vo.setPassword(password);
+//		UserDAO userDAO = new UserDAO();
+//		UserVO user = userDAO.getUser(vo);
 		
 		// 3. 화면 네비게이션 
-		ModelAndView mav = new ModelAndView();
+//		ModelAndView mav = new ModelAndView();
+		
+		UserVO user = userDAO.getUser(vo);
+		
 		if(user != null) {
-			mav.setViewName("redirect:getBoardList.do");
+			session.setAttribute("userName", user.getName());
+			return "getBoardList.do";
 		} else {
-			mav.setViewName("redirect:login.jsp");
+			return "login.jsp";
 		}
 		
-		return mav;
 	}
 
 }

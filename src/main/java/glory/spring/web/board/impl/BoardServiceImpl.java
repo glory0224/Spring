@@ -9,7 +9,7 @@ import glory.spring.web.board.BoardService;
 import glory.spring.web.board.BoardVO;
 import glory.spring.web.common.Log4jAdvice;
 import glory.spring.web.common.LogAdvice;
-
+/*
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	
@@ -46,4 +46,4 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getBoardList(vo);
 	}
 
-}
+}*/
