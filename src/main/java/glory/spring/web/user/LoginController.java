@@ -44,6 +44,12 @@ public class LoginController{
 		// 3. 화면 네비게이션 
 //		ModelAndView mav = new ModelAndView();
 		
+		// 아이디 null 에러 
+		if(vo.getId() == null || vo.getId().equals("")) {
+			// throw로 에러가 발생 
+			throw new IllegalAccessError("아이디는 반드시 입력해야 합니다.");
+		}
+		
 		UserVO user = userDAO.getUser(vo);
 		
 		if(user != null) {

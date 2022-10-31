@@ -22,7 +22,14 @@ public class BoardDAO {
 						+ "content=? where seq=?";
 	private final String BOARD_DELETE = "delete from myboard where seq=?";
 	private final String BOARD_GET = "select * from myboard where seq=?";
-	private final String BOARD_LIST = "select * from myboard order by seq desc";
+	// 검색에 따른 BOARD_LIST 쿼리 분리하기
+	//private final String BOARD_LIST = "select * from myboard order by seq desc";
+	//title (검색 시 bind)
+	private final String BOARD_LIST_T = 
+			"select * from myboard where title like '%'||?||'%' order by seq desc ";
+	//content (검색 시 bind)
+	private final String BOARD_LIST_C = 
+			"select * from myboard where content like '%'||?||'%' order by seq desc ";
 	
 	// 글쓰기
 	public void insertBoard(BoardVO vo) {
@@ -109,7 +116,13 @@ public class BoardDAO {
 		List<BoardVO> boardList = new ArrayList<BoardVO>();
 		try {
 		conn = JDBCUtil.getConnection();
-		pstmt = conn.prepareStatement(BOARD_LIST);
+		// sql like 바인딩 방법 
+		if(vo.getSearchCondition().equals("TITLE")) {
+			pstmt = conn.prepareStatement(BOARD_LIST_T);
+		} else if (vo.getSearchCondition().equals("CONTENT")) {
+			pstmt = conn.prepareStatement(BOARD_LIST_C);
+		}
+		pstmt.setString(1, vo.getSearchKeyword());
 		rs = pstmt.executeQuery();
 		while(rs.next()) {
 			BoardVO board = new BoardVO();

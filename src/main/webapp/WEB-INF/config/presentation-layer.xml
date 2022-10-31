@@ -2,40 +2,56 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-<!-- xml 설정 -->
+	<!-- 어노테이션 방식 -->
+	<context:component-scan
+		base-package="glory.spring.web"></context:component-scan>
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<!-- 파일 업로드 설정 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000" />
+	</bean>
 
-<!-- <bean  class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-	<property name="mappings">
-		<props>
-			<prop key="/login.do">login</prop>
-			<prop key="/getBoardList.do">getBoardList</prop>
-			<prop key="/getBoard.do">getBoard</prop>
-			<prop key="/insertBoard.do">insertBoard</prop>
-			<prop key="/updateBoard.do">updateBoard</prop>
-			<prop key="/deleteBoard.do">deleteBoard</prop>
-			<prop key="/logout.do">logout</prop>
-		</props>
-	</property>
-</bean>
-	<bean id="login" class="glory.spring.web.user.LoginController"></bean>
-	<bean id="getBoardList" class="glory.spring.web.board.GetBoardListController"></bean>
-	<bean id="getBoard" class="glory.spring.web.board.GetBoardController"></bean>
-	<bean id="insertBoard" class="glory.spring.web.board.InsertBoardController"></bean>
-	<bean id="updateBoard" class="glory.spring.web.board.UpdateBoardController"></bean>
-	<bean id="deleteBoard" class="glory.spring.web.board.DeleteBoardController"></bean>
-	<bean id="logout" class="glory.spring.web.user.LogoutController"></bean>
-	
-	ViewResolver 등록
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/board/"></property>
-		<property name="suffix" value=".jsp"></property>
-	</bean> -->
+	<!-- mvc Namespaces 체크 후 mvc 어노테이션 태그 사용 -->
+	<!-- <mvc:annotation-driven></mvc:annotation-driven> -->
 
-<!-- 어노테이션 방식 -->
-	<context:component-scan base-package="glory.spring.web"></context:component-scan>
-	
-	
+	<!-- 예외 처리 xml 설정 -->
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.ArithmeticException">common/arithmeticError.jsp</prop>
+				<prop key="java.lang.NullPointerException">common/nullPointerError.jsp</prop>
+			</props>
+		</property>
+		<property name="defaultErrorView" value="common/error.jsp" />
+	</bean>
+
+	<!-- 다국어 설정 : MessageSource 등록 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>message.messageSource</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 세션으로부터 Locale 정보를 추출하고 유지하는 SessionLocaleResolver 사용 -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
+
+	<!-- 특정 언어로 화면을 보다가 해당 화면의 언어를 변경하고 싶을 때 -->
+	<mvc:interceptors>
+		<bean
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+		</bean>
+	</mvc:interceptors>
 </beans>

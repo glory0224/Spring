@@ -9,12 +9,12 @@ import glory.spring.web.board.BoardService;
 import glory.spring.web.board.BoardVO;
 import glory.spring.web.common.Log4jAdvice;
 import glory.spring.web.common.LogAdvice;
-/*
+
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
-	
+	// BoardDAO와 BoardDAOSpring 파일을 얼마든지 바꿔가면서 가능
 	@Autowired
-	private BoardDAOSpring boardDAO;
+	private BoardDAO boardDAO;
 	
 	@Override
 	public void insertBoard(BoardVO vo) {
@@ -46,4 +46,4 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getBoardList(vo);
 	}
 
-}*/
+}
