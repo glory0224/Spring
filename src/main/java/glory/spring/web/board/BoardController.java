@@ -24,10 +24,20 @@ public class BoardController {
 	private BoardService boardService;
 	
 	// 데이터 변환
-	@RequestMapping("/dataTransform.do")
+	@RequestMapping("/dataTransformJSON.do")
+	@ResponseBody
+	public List<BoardVO>  dataTransformJSON(BoardVO vo){
+		vo.setSearchCondition("TITLE");
+		vo.setSearchKeyword("");
+		List<BoardVO> boardList = boardService.getBoardList(vo);
+		return boardList;
+		
+	}
+	
+	@RequestMapping("/dataTransformXML.do")
 	@ResponseBody
 	//public List<BoardVO> dataTransform(BoardVO vo){
-	public BoardListVO dataTransform(BoardVO vo){
+	public BoardListVO dataTransformXML(BoardVO vo){
 		vo.setSearchCondition("TITLE");
 		vo.setSearchKeyword("");
 		List<BoardVO> boardList = boardService.getBoardList(vo);
