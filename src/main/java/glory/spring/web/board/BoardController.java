@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@SessionAttributes("board") // ModelAttritbute의 정보를 세션에 등록한다. 
+//@SessionAttributes("board") // ModelAttritbute의 정보를 세션에 등록한다. 
 public class BoardController {
 	
 	// 컨트롤러에서 DAO를 직접 DI 해서 사용하면 유지보수의 문제가 있기 때문에 service 인터페이스를 사용한다.
