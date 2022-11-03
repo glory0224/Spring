@@ -14,7 +14,7 @@ import glory.spring.web.common.LogAdvice;
 public class BoardServiceImpl implements BoardService {
 	// BoardDAO와 BoardDAOSpring 파일을 얼마든지 바꿔가면서 가능
 	@Autowired
-	private BoardDAOMybatis boardDAO;
+	private BoardDAOJPA boardDAO;
 	
 	@Override
 	public void insertBoard(BoardVO vo) {

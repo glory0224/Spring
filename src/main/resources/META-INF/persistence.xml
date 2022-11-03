@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="myboard">
+		<class>glory.spring.web.board.BoardVO</class>
+		<properties>
+			<!-- 필수 속성  -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+			<!-- 옵션 -->
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.use_sql_comments" value="false"/>
+			<property name="hibernate.id.new_generator_mappings" value="true"/>
+			<!-- 주의) 자동으로 쿼리문을 생성해주는 JPA는 기존의 테이블도 삭제 후 생성한다! 아래의 value를 create로 할 경우 계속 삭제후 생성하기 때문에 한번 생성하고 난 뒤에는 update or none 값을 주면 새로 생성하지 않고 쿼리문을 실행한다. -->
+			<property name="hibernate.hbm2ddl.auto" value="create"/> 		
+		</properties>
+	</persistence-unit>
+</persistence>

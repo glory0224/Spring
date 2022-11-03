@@ -156,16 +156,16 @@
 -->
 
 	<!-- Mybatis 사용을 위한 SqlSessionFactoryBean 등록 -->
-	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+<!-- 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
-	</bean>
+	</bean> -->
 	
 	<!-- DAO 클래스를 상속 없이 구현하기 위한 SqlSessionTemplate 클래스 빈 등록 -->
 	<!-- SqlSessionTemplate 클래스에는 setter 메서드가 없어서 생성자 인젝션을 사용할 수밖에 없다. -->
- 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+<!--  	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 			<constructor-arg ref="sessionFactory"></constructor-arg>
-	</bean>
+	</bean> -->
 
 	<!-- properties 파일을 이용한 JDBC 설정 -->
 	
@@ -178,27 +178,43 @@
 		
 	</bean>
 	
-<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-	<property name="dataSource" ref="dataSource" />
+	<!-- 스프링과 JPA 연동 설정 -->
+	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		
 	</bean>
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter"></property>
+	</bean>	
+<!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	<property name="dataSource" ref="dataSource" />
+	</bean> -->
 	
 	<!-- Transaction 설정 -->
-	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<!-- <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>	
+	 -->
+	<!-- JPA Transaction 설정  -->
+	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
+	</bean>
 	
-	<tx:advice id="txAdvice" transaction-manager="txManager">
+	<!-- JPA 트랜잭션을 설정할 때에는 하단의 설정들을 presentation-layer로 옮긴다. -->
+	
+	<!-- <tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
 			<tx:method name="get" read-only="true"/>
 			<tx:method name="*"/>
 		</tx:attributes>
 	</tx:advice>
 	
-	<!-- Aop까지 설정해야 Transaction이 올바르게 실행된다.  -->
+	Aop까지 설정해야 Transaction이 올바르게 실행된다. 
 	
 	<aop:config>
 		<aop:pointcut expression="execution(* glory.spring.web..*(..))" id="txPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
-	</aop:config>
+	</aop:config> -->
 	
 </beans>

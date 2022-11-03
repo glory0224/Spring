@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import glory.spring.web.board.BoardVO;
 
 
-@Repository
+//@Repository
 public class BoardDAOSpring {
 	// xml 설정 방식 
 	@Autowired

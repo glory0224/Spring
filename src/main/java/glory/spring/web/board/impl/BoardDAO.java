@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import glory.spring.web.board.BoardVO;
 import glory.spring.web.common.JDBCUtil;
 
-@Repository("boardDAO")
+//@Repository("boardDAO")
 public class BoardDAO {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;

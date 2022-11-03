@@ -3,14 +3,22 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<!-- 어노테이션 방식 -->
 	<context:component-scan
 		base-package="glory.spring.web"></context:component-scan>
 	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<!-- transaction과 aop 어노테이션 사용을 위한 태그 -->
+	<tx:annotation-driven/>
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
 	<!-- 파일 업로드 설정 -->
 	<bean id="multipartResolver"
@@ -54,4 +62,20 @@
 			<property name="paramName" value="lang" />
 		</bean>
 	</mvc:interceptors>
+	
+	<!-- namespace에 tx와 aop 체크 확인 후 태그 등록 -->
+	
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- Aop까지 설정해야 Transaction이 올바르게 실행된다.  -->
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* glory.spring.web..*Impl.*(..))" id="txPointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+	</aop:config>
 </beans>

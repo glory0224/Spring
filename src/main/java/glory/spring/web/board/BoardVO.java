@@ -2,6 +2,14 @@ package glory.spring.web.board;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 //sql.Date는 DB에서만 날짜 계산 가능, util.Date는 자바에서만 날짜 계산 가능, 따라서 넘어오면 형변환을 해야 날짜 계산이 가능하다.
 // 근본적인 차이는 util.Date는 default 생성자가 존재하는데 sql.Date는 default 생성자가 없다. 
 //import java.sql.Date;
@@ -15,23 +23,32 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore; 
 // java 11버전에서는 xmlAccessorType이 삭제되어서 나오지 않는다. pom.xml에서 dependency를 주입해서 사용한다. 
+@Entity
 @XmlAccessorType(XmlAccessType.FIELD)
+@Table(name="MYBOARD")
 public class BoardVO {
 	
+	@Id
+	@GeneratedValue
 	@XmlAttribute
 	private int seq;
 	private String title;
 	private String writer;
 	private String content;
-	private Date regDate; // 특정 자바 객체를 XML로 변환하기 위해선 반드시 해당 클래스의 기본 생성자가 있어야한다. -> util.Date로 변경한다. 이유: sql.Date는 기본 생성자가 없는 객체라서  
+	// JPA를 이용할 때는 객체를 새로 생성해주면서 초기화 
+	@Temporal(TemporalType.DATE)
+	private Date regDate = new Date(); // 특정 자바 객체를 XML로 변환하기 위해선 반드시 해당 클래스의 기본 생성자가 있어야한다. -> util.Date로 변경한다. 이유: sql.Date는 기본 생성자가 없는 객체라서  
 	private int cnt;
 	// 검색 조건
-	@XmlTransient // xml 변환에서 제외 
+	//@XmlTransient // xml 변환에서 제외 
+	@Transient
 	private String searchCondition;
-	@XmlTransient // xml 변환에서 제외
+	// @XmlTransient // xml 변환에서 제외
+	@Transient
 	private String searchKeyword;
 	// 파일 업로드 // xml 변환에서 제외
-	@XmlTransient
+	//@XmlTransient
+	@Transient
 	private MultipartFile uploadFile;
 	
 	// null값으로 넘어오는 get메서드의 json은 안나오도록 하는 어노테이션
