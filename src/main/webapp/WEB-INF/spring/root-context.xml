@@ -169,6 +169,7 @@
 
 
 	<context:component-scan base-package="glory.spring.web"></context:component-scan>
+	<context:component-scan base-package="glory.spring.myweb"></context:component-scan>
 	<!-- properties 파일을 이용한 JDBC 설정 -->
 	
 	<context:property-placeholder location="classpath:config/database.properties"/>

@@ -1,11 +1,14 @@
 package glory.spring.web.user;
 
+import lombok.Data;
+
+@Data
 public class UserVO {
 	private String id;
 	private String password;
 	private String name;
 	private String role;
-	public String getId() {
+	/*public String getId() {
 		return id;
 	}
 	public void setId(String id) {
@@ -32,7 +35,7 @@ public class UserVO {
 	@Override
 	public String toString() {
 		return "UserVO [id=" + id + ", password=" + password + ", name=" + name + ", role=" + role + "]";
-	}
+	}*/
 	
 	
 }
