@@ -7,11 +7,22 @@
 	<!-- src/main/resources/applicationContext.xml 파일 읽기  -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:applicationContext.xml</param-value>
+		<param-value>
+		/WEB-INF/spring/root-context.xml
+		/WEB-INF/spring/security-context.xml
+		</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 <!-- 필터는 web.xml의 맨 상단에 위치해야 한글이 깨지지 않는 것이 잘 적용된다. -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -33,7 +44,7 @@
 		<!-- 초기화 파라미터 변경 -->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/config/presentation-layer.xml</param-value>
+			<param-value>/WEB-INF/spring/presentation-layer.xml</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>

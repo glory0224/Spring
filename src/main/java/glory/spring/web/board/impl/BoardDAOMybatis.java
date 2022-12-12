@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import glory.spring.web.board.BoardVO;
 
-//@Repository
+@Repository
 //public class BoardDAOMybatis extends SqlSessionDaoSupport {
 public class BoardDAOMybatis {
 		

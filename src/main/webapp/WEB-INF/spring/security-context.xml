@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security-5.7.xsd">
+<!-- 페이지에서 security code 에러를 방지하기 위한 bean -->
+<bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+
+<bean id="customAccessDenied" class="glory.spring.web.common.handler.CustomAccessDenieHandler"></bean>
+<bean id="CustomLoginSuccess" class="glory.spring.web.common.handler.CustomLoginSuccessHandler"></bean>
+
+	<security:http>
+		<security:intercept-url pattern="/sample/all.do" access="permitAll"/>
+		<security:intercept-url pattern="/sample/member.do" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/sample/admin.do" access="hasRole('ROLE_ADMIN')"/>
+		<!-- 스프링 시큐리티 로그인 처리 -->		
+		<security:form-login login-page="/customLogin.do" authentication-success-handler-ref="CustomLoginSuccess"/>
+		<!-- 스프링 시큐리티 로그아웃 처리 -->
+		<security:logout logout-url="/customLogout.do" invalidate-session="true"/>
+		<!-- 접근제한 uri : 현재는 스프링 시큐리티 제공 에러페이지 사용 -->
+		<!-- <security:access-denied-handler error-page="/accessError.do"/> -->
+		<!-- 커스텀 방식 에러페이지 참조 -->
+		<security:access-denied-handler ref="customAccessDenied"/>
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
+				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+</beans>

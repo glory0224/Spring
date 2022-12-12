@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import glory.spring.web.board.BoardVO;
 
 // 각각의 방식마다 하나의 Repository를 등록해야한다. 만약 JPA 방식의 DAO를 사용할 경우 다른 DAO 파일의 @Repository는 주석처리해야한다. 
-@Repository
+/*@Repository*/
 public class BoardDAOJPA {
 	
 		@PersistenceContext
