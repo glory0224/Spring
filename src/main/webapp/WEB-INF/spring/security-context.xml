@@ -7,8 +7,12 @@
 <!-- 페이지에서 security code 에러를 방지하기 위한 bean -->
 <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
 
-<bean id="customAccessDenied" class="glory.spring.web.common.handler.CustomAccessDenieHandler"></bean>
+<bean id="CustomAccessDenied" class="glory.spring.web.common.handler.CustomAccessDenieHandler"></bean>
 <bean id="CustomLoginSuccess" class="glory.spring.web.common.handler.CustomLoginSuccessHandler"></bean>
+<!-- <bean id="CustomPasswordEncoder" class="glory.spring.web.common.handler.CustomNoOpPasswordEncoder"></bean> -->
+<!-- 스프링 내장 passwordencoder -->
+<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
 
 	<security:http>
 		<security:intercept-url pattern="/sample/all.do" access="permitAll"/>
@@ -21,15 +25,20 @@
 		<!-- 접근제한 uri : 현재는 스프링 시큐리티 제공 에러페이지 사용 -->
 		<!-- <security:access-denied-handler error-page="/accessError.do"/> -->
 		<!-- 커스텀 방식 에러페이지 참조 -->
-		<security:access-denied-handler ref="customAccessDenied"/>
+		<security:access-denied-handler ref="CustomAccessDenied"/>
 	</security:http>
 	
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<security:user-service>
+			<!-- <security:user-service>
 				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
 				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
-			</security:user-service>
+			</security:user-service> -->
+			<!-- There is no PasswordEncoder mapped for the id "null"  -->
+			<!-- 스프링 시큐리티 테이블을 이용하기 위해서는 passwordEncoder가 필요하다. -->
+			<security:jdbc-user-service data-source-ref="dataSource"/>
+			<!-- <security:password-encoder ref="CustomPasswordEncoder"/> -->
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
 	
