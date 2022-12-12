@@ -29,7 +29,7 @@ public class LoginController{
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(UserVO vo, UserDAO userDAO, HttpSession session) {
 		System.out.println("로그인 처리");
-		
+		System.out.println("커밋 확인용 프린트");
 		// 1. 사용자 입력 정보 추출
 		// String id = request.getParameter("id");
 		// String password = request.getParameter("password");
