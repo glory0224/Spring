@@ -22,11 +22,13 @@
 		<!-- 스프링 시큐리티 로그인 처리 -->		
 		<security:form-login login-page="/customLogin.do" authentication-success-handler-ref="CustomLoginSuccess"/>
 		<!-- 스프링 시큐리티 로그아웃 처리 -->
-		<security:logout logout-url="/customLogout.do" invalidate-session="true"/>
+		<security:logout logout-url="/customLogout.do" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID"/>
 		<!-- 접근제한 uri : 현재는 스프링 시큐리티 제공 에러페이지 사용 -->
 		<!-- <security:access-denied-handler error-page="/accessError.do"/> -->
 		<!-- 커스텀 방식 에러페이지 참조 -->
 		<security:access-denied-handler ref="CustomAccessDenied"/>
+		<!-- 자동 로그인 -->
+		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
 	</security:http>
 	
 	<security:authentication-manager>
