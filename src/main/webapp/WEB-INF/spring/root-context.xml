@@ -166,10 +166,11 @@
   	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 			<constructor-arg ref="sessionFactory"></constructor-arg>
 	</bean>
+	
 
 
 	<context:component-scan base-package="glory.spring.web"></context:component-scan>
-	<context:component-scan base-package="glory.spring.myweb"></context:component-scan>
+	
 	<!-- properties 파일을 이용한 JDBC 설정 -->
 	
 	<context:property-placeholder location="classpath:config/database.properties"/>
@@ -219,5 +220,5 @@
 		<aop:pointcut expression="execution(* glory.spring.web..*(..))" id="txPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
 	</aop:config> -->
-	
+	<!-- <bean id="MemberMapper" class="glory.spring.web.user.impl.MemberMapperImp"></bean> -->
 </beans>
